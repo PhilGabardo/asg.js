@@ -101,7 +101,7 @@ that behavior to be changed.
 match any part of an option for that suggestion to be shown. For example, if the input 
 'arm' is given, a suggestion for 'Charmander' will be shown only if this option is set to `true`.
 
-****
+## Contributers and Open-Source License
 
 *Authors: Don McCurdy, David Schnurr*
 
