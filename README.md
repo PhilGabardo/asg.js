@@ -41,7 +41,7 @@ function (key, valuePartial, callback) {
 ```
 
 A full list of all initialization options is available 
-[below](https://github.com/FindTheBest/all/edit/master/modules/custom/lib_ftb/asg/README.md#options).
+[below](#options).
 
 
 ## Using the Plugin:
@@ -71,7 +71,7 @@ $('#my-input').asg('set', key, value);
 The following options are available:
 
 * `source: null` An array or function, as described 
-[above](https://github.com/FindTheBest/all/edit/master/modules/custom/lib_ftb/asg/README.md#initialization).
+[above](#initialization).
 
 * `namespace: 'asg'` Prefix added to plugin's HTML elements, for your CSSing pleasure.
 
