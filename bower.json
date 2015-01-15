@@ -7,7 +7,7 @@
     "FindTheBest",
     "Inc."
   ],
-  "description": "Autocomplete jQuery plugin that takes an input and adds functionality for local or AJAX autocomplete.",
+  "description": "Autocomplete plugin for jQuery that takes an input and adds functionality for local or AJAX autocomplete.",
   "keywords": [
     "autocomplete",
     "autosuggest",
