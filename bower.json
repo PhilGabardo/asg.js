@@ -1,0 +1,26 @@
+{
+  "name": "asg.js",
+  "main": "dist/asg.min.js",
+  "version": "0.5.0",
+  "homepage": "https://github.com/FindTheBest/asg.js",
+  "authors": [
+    "FindTheBest",
+    "Inc."
+  ],
+  "description": "Autocomplete jQuery plugin that takes an input and adds functionality for local or AJAX autocomplete.",
+  "keywords": [
+    "autocomplete",
+    "autosuggest",
+    "input",
+    "form",
+    "suggest"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

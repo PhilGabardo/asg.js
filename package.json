@@ -1,0 +1,34 @@
+{
+  "name": "asg.js",
+  "version": "0.5.0",
+  "description": "Autocomplete jQuery plugin that takes an input and adds functionality for local or AJAX autocomplete.",
+  "main": "dist/asg.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/FindTheBest/asg.js.git"
+  },
+  "keywords": [
+    "autocomplete",
+    "autosuggest",
+    "suggest",
+    "input",
+    "form"
+  ],
+  "author": "FindTheBest, Inc.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FindTheBest/asg.js/issues"
+  },
+  "homepage": "https://github.com/FindTheBest/asg.js",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-bump": "0.0.16",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-sass": "^0.8.1",
+    "grunt-contrib-uglify": "^0.7.0",
+    "grunt-contrib-watch": "^0.6.1"
+  }
+}

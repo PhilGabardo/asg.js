@@ -1,6 +1,6 @@
 # asg.js Autosuggest Plugin - ReadMe
 
-Updated: October 2013
+Updated: January 2015
 
 ## Initialization:
 
