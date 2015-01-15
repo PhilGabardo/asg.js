@@ -30,7 +30,8 @@ module.exports = function (grunt) {
 		bump: {
 			options: {
 				push: false,
-				files: ['package.json', 'bower.json']
+				files: ['package.json', 'bower.json'],
+				commitFiles: ['package.json', 'bower.json']
 			}
 		},
 
