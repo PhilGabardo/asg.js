@@ -1,8 +1,8 @@
 /*********************************************************************/
 /************************* AUTOSUGGEST PLUGIN ************************/
-/* 
+/*
  * jQuery plugin that takes an input and adds functionality for local
- *	or AJAX autocomplete. If no autocomplete source is provided, it 
+ *	or AJAX autocomplete. If no autocomplete source is provided, it
  *  can also serve nicely as a change-event debouncer.
  *
  * Version: 0.8
@@ -17,7 +17,7 @@
 
 		////////////////////////////////////////////////////////////////
 		var // PRIVATE VARS ////////////////////////////////////////////
-			input, 
+			input,
 			suggestions,
 			suggestions_ul,
 			suggestions_up = false,
@@ -51,7 +51,7 @@
 		////////////////////////////////////////////////////////////////
 		// PRIVATE METHODS /////////////////////////////////////////////
 		var	init, buildHTML, update, showSuggestions, suggest, bindEvents,
-			normalizeSuggestions, updatePosition, onInput, onCommand; 
+			normalizeSuggestions, updatePosition, onInput, onCommand;
 
 		/**
 		 * Initializes an autosuggest instance.
@@ -94,7 +94,7 @@
 		};
 
 		/**
-		 * Builds the HTML for the suggestion modal. 
+		 * Builds the HTML for the suggestion modal.
 		 */
 		buildHTML = function () {
 			var classes = options.classes.join(' ');
@@ -121,11 +121,13 @@
 
 		updatePosition = function () {
 			if (options.staticPos) return;
-			var 
+			var
 			pos = {},
 			offset = input.offset();
 			if (options.putAbove) {
 				pos.top = offset.top - (11 + options.offsetTop + suggestions.height());
+			} else if (options.fixed) {
+				pos.top = offset.top - $(window).scrollTop() + 20 + options.offsetTop;
 			} else {
 				pos.top = offset.top + 20 + options.offsetTop;
 			}
@@ -152,7 +154,9 @@
 					p = pool[i];
 					displayValue = p.verbatim ? ('&#8220;'+p.value+'&#8221;') : p.value;
 					$('<li class="'+ns+'-li">'
-						+	'<span class="'+ns+'-img-wrap">'+(p.img ? '<img class="'+ns+'-img" src="'+p.img+'">' : '')+'</span>'
+						+	'<span class="'+ns+'-img-wrap '+(p.img ? '' : ns+'-no-img')+'">'
+						+		(p.img ? '<img class="'+ns+'-img" src="'+p.img+'">' : '')
+						+	'</span>'
 						+	'<span class="'+ns+'-label" tabindex="-1">'+displayValue+'</span>'
 						+'</li>')
 					.data(ns+'-data', p)
@@ -172,10 +176,10 @@
 		 * Queries source, if any, with current state of input.
 		 */
 		suggest = function () {
-			var i, 
+			var i,
 				latest,
 				src = options.source,
-				pool = [], 
+				pool = [],
 				val = input.val(),
 				norm_callback = function (list) {
 					if (latest < suggest.latest || tSug) { return; } // Exit if other suggestions are coming.
@@ -199,7 +203,7 @@
 				showSuggestions(pool);
 			} else if ($.isFunction(src)) {	// Callback suggestions
 				latest = ++suggest.latest;
-				src(null, val, norm_callback);				
+				src(null, val, norm_callback);
 			}
 		};
 		suggest.latest = 0;
@@ -255,8 +259,8 @@
 				listeners.keyup[i].call(input, e);
 			}
 
-			var sel, hadValue, 
-			wasTyping = tSug, 
+			var sel, hadValue,
+			wasTyping = tSug,
 			value = input.val();
 			earlyReturn = 0;
 
@@ -306,13 +310,13 @@
 				case 38: // Up
 					sel.removeClass('sel');
 					if (e.preventDefault) { e.preventDefault(); }
-					if (sel.length && sel.prev().length) { sel.prev().addClass('sel'); } 
+					if (sel.length && sel.prev().length) { sel.prev().addClass('sel'); }
 					else { suggestions.find('ul li:last-child').addClass('sel'); }
 					break;
 				case 40: // Down
 					sel.removeClass('sel');
 					if (e.preventDefault) { e.preventDefault(); }
-					if (sel.length && sel.next().length) { sel.next().addClass('sel'); } 
+					if (sel.length && sel.next().length) { sel.next().addClass('sel'); }
 					else { suggestions.find('ul li:first-child').addClass('sel'); }
 					break;
 				case 27: // Escape
@@ -324,7 +328,7 @@
 
 		////////////////////////////////////////////////////////////////
 		// PUBLIC METHODS  /////////////////////////////////////////////
-		
+
 		/**
 		 * Get current state of input. Returns undefined
 		 *	if no valid item has been chosen.
@@ -339,7 +343,7 @@
 
 		/**
 		 * Set state of the input. Value is optional, key is not.
-		 * @param  string key 
+		 * @param  string key
 		 * @param  string value
 		 * @param  object keyAndValue
 		 * @param  function callback
@@ -349,7 +353,7 @@
 				key: key,
 				value: value
 			};
-			var i, 
+			var i,
 				src = options.source;
 			if (obj.value && obj.key) {	// The nice case
 				input.val(obj.value).data(ns+'-data', obj);
@@ -366,7 +370,7 @@
 							break;
 						}
 					}
-					if (!foundMatch) {	self.clear(); } 
+					if (!foundMatch) {	self.clear(); }
 					else { (cb||$.noop)(); }
 				} else {
 					src(obj.key, null, function (list) {
@@ -401,6 +405,11 @@
 
 		self.on = function (event, callback) {
 			listeners[event].push(callback);
+		};
+
+		self.fixed = function() {
+			suggestions.addClass('asg-fixed');
+			options.fixed = true;
 		};
 
 		/**

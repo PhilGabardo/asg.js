@@ -91,5 +91,7 @@
 		left: auto;
 		right: 20%;
 	}
-
+	&.asg-fixed {
+		position: fixed;
+	}
 }
