@@ -1,22 +1,28 @@
-# asg.js Autosuggest Plugin - ReadMe
+# asg.js
+
+Autocomplete plugin for jQuery that takes an input and adds functionality for local or AJAX autocomplete.
 
 Updated: January 2015
+
+***
 
 ## Initialization:
 
 ```javascript
 $('#my-input').asg({
-	source: [source]
+	source: ['Africa', 'Antarctica', 'Asia', 'Australia', 'Europe', 'North America', 'South America']
 });
 ```
 
 [Source] may be an array of raw strings, a function (described below), or an array of objects of the form: 
 ```javascript
-{
+[
+    {
 	key: '1', 
 	value: 'My Label', 
 	img: 'http://...' // (Optional)
-}
+    },
+    // ...
 ```
 
 To pass a function as the source, it must take three parameters: (key, valuePartial, callback).
