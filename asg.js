@@ -84,7 +84,7 @@
 				for (i = 0; i < list.length; i++) {
 					list[i] = {key: list[i],value: list[i]};
 				}
-			} else if (!list[0].key || !list[0].value) {
+			} else if (!('key' in list[0]) || !('value' in list[0])) {
 				for (i = 0; i < list.length; i++) {
 					v = list[i].key || list[i].value;
 					list[i].key = list[i].value = v;
@@ -336,7 +336,7 @@
 		 */
 		self.get = function () {
 			var data = input.data(ns+'-data');
-			if (data && data.key && data.value) {
+			if (data && 'key' in data && 'value' in data) {
 				return data;
 			}
 		};
@@ -355,10 +355,10 @@
 			};
 			var i,
 				src = options.source;
-			if (obj.value && obj.key) {	// The nice case
+			if ('value' in obj && 'key' in obj) {	// The nice case
 				input.val(obj.value).data(ns+'-data', obj);
 				(cb||$.noop)();
-			} else if (obj.key) {	// Only key given
+			} else if ('key' in obj) {	// Only key given
 				obj.value = obj.key;
 				input.val('...').data(ns+'-data', obj);
 				if ($.isArray(src)) {
@@ -424,7 +424,7 @@
 	// PLUGIN EXPORT ///////////////////////////////////////////////
 	$.fn[dataObj] = $.fn[dataObj.toUpperCase()] = function( method ) {
 		var obj = this.data(dataObj);
-		if ( !method || typeof method == 'object') {
+		if ( !method || typeof method === 'object') {
 			return obj || this.data(dataObj, ASG(this, method));
 		} else if ( !obj ) {
 			$.error('Cannot call "'+method+'" - Autosuggest not initialized.');
