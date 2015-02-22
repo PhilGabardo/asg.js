@@ -1,6 +1,6 @@
 {
   "name": "asg.js",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "Autocomplete plugin for jQuery that takes an input and adds functionality for local or AJAX autocomplete.",
   "main": "dist/asg.min.js",
   "scripts": {
