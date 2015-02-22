@@ -84,7 +84,7 @@
 				for (i = 0; i < list.length; i++) {
 					list[i] = {key: list[i],value: list[i]};
 				}
-			} else if (!('key' in list[0]) || !('value' in list[0])) {
+			} else if (!list[0].key || !list[0].value) {
 				for (i = 0; i < list.length; i++) {
 					v = list[i].key || list[i].value;
 					list[i].key = list[i].value = v;
@@ -336,7 +336,7 @@
 		 */
 		self.get = function () {
 			var data = input.data(ns+'-data');
-			if (data && 'key' in data && 'value' in data) {
+			if (data && data.key && data.value) {
 				return data;
 			}
 		};
@@ -355,10 +355,10 @@
 			};
 			var i,
 				src = options.source;
-			if ('value' in obj && 'key' in obj) {	// The nice case
+			if (obj.value && obj.key) {	// The nice case
 				input.val(obj.value).data(ns+'-data', obj);
 				(cb||$.noop)();
-			} else if ('key' in obj) {	// Only key given
+			} else if (obj.key) {	// Only key given
 				obj.value = obj.key;
 				input.val('...').data(ns+'-data', obj);
 				if ($.isArray(src)) {
