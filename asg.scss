@@ -82,7 +82,7 @@
 
 	&.above {
 		border-top: 0px;
-		border-bottom: 5px solid #00c0ff;;
+		border-bottom: 5px solid #00c0ff;
 
 		&:after {
 			top: auto;
@@ -98,4 +98,8 @@
 	&.asg-fixed {
 		position: fixed;
 	}
+}
+
+.asg-matched {
+	font-weight: bold;
 }

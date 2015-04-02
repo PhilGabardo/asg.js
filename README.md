@@ -107,6 +107,9 @@ that behavior to be changed.
 match any part of an option for that suggestion to be shown. For example, if the input 
 'arm' is given, a suggestion for 'Charmander' will be shown only if this option is set to `true`.
 
+* `boldMatches: false` Add a bold styling to the substrings within each autosuggest result
+that match the user's query string. This style can be customized with the .asg-matched class.
+
 ## Contributers and Open-Source License
 
 *Authors: Don McCurdy, David Schnurr*

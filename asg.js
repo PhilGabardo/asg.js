@@ -34,7 +34,8 @@
 				numToSuggest: 10,
 				leadingWildcard: false,
 				staticPos: false,
-				footer: null
+				footer: null,
+				boldMatches: false
 			}, argOpts),
 			ns = options.namespace, // Event/CSS namespace
 			container = options.container, // Element to render results into
@@ -143,16 +144,20 @@
 		 * Shows a list of suggestions.
 		 * @param  array pool_of_suggestions
 		 */
-		showSuggestions = function (pool) {
+		showSuggestions = function (pool, val) {
 			suggestions_ul.empty();
 			suggestions_up = false;
 			if (pool && pool.length) {
 				var i, p, displayValue,
 					lis = $('<ul/>'),
-					limit = options.numToSuggest || 1000;
+					limit = options.numToSuggest || 1000,
+					valRegex = new RegExp('(' + val + ')', 'i');
 				for (i = 0; i < pool.length && i < limit; i++) {
 					p = pool[i];
 					displayValue = p.verbatim ? ('&#8220;'+p.value+'&#8221;') : p.value;
+					if (options.boldMatches) {
+						displayValue = displayValue.replace(valRegex, '<span class="'+ns+'-matched">$1</span>');
+					}
 					$('<li class="'+ns+'-li">'
 						+	'<span class="'+ns+'-img-wrap '+(p.img ? '' : ns+'-no-img')+'">'
 						+		(p.img ? '<img class="'+ns+'-img" src="'+p.img+'">' : '')
@@ -184,7 +189,7 @@
 				norm_callback = function (list) {
 					if (latest < suggest.latest || tSug) { return; } // Exit if other suggestions are coming.
 					else if (earlyReturn && (list||[]).length) { self.set(0,0,list[0]); update(); }
-					else { showSuggestions(normalizeSuggestions(list)); }
+					else { showSuggestions(normalizeSuggestions(list), val); }
 				},
 				regex = new RegExp((options.leadingWildcard ? '': '^') + val, 'i');
 			tSug = 0;
