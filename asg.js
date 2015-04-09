@@ -35,7 +35,8 @@
 				leadingWildcard: false,
 				staticPos: false,
 				footer: null,
-				boldMatches: false
+				boldMatches: false,
+				clickEvent: 'click'
 			}, argOpts),
 			ns = options.namespace, // Event/CSS namespace
 			container = options.container, // Element to render results into
@@ -247,7 +248,7 @@
 				}
 			});
 
-			suggestions.on('click', 'li', function () {
+			suggestions.on(options.clickEvent, 'li', function () {
 				self.set(0,0,$(this).data(ns+'-data'));
 				update();
 			});
