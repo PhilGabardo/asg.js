@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/FindTheBest/asg.js.git"
+    "url": "git://github.com/graphiq/asg.js.git"
   },
   "keywords": [
     "autocomplete",
@@ -17,12 +17,12 @@
     "input",
     "form"
   ],
-  "author": "FindTheBest, Inc.",
+  "author": "Graphiq, Inc.",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/FindTheBest/asg.js/issues"
+    "url": "https://github.com/graphiq/asg.js/issues"
   },
-  "homepage": "https://github.com/FindTheBest/asg.js",
+  "homepage": "https://github.com/graphiq/asg.js",
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-bump": "0.0.16",

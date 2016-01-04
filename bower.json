@@ -2,10 +2,9 @@
   "name": "asg.js",
   "main": "dist/asg.min.js",
   "version": "0.5.8",
-  "homepage": "https://github.com/FindTheBest/asg.js",
+  "homepage": "https://github.com/graphiq/asg.js",
   "authors": [
-    "FindTheBest",
-    "Inc."
+    "Graphiq Inc."
   ],
   "description": "Autocomplete plugin for jQuery that takes an input and adds functionality for local or AJAX autocomplete.",
   "keywords": [
