@@ -6,7 +6,7 @@
  *  can also serve nicely as a change-event debouncer.
  *
  * Version: 0.8
- * Author: FindTheBest.com, Inc.
+ * Author: Graphiq Inc.
  * Updated: October, 2013
  */
 /*********************************************************************/
@@ -36,11 +36,14 @@
 				staticPos: false,
 				footer: null,
 				boldMatches: false,
-				clickEvent: 'click'
+				clickEvent: 'click',
+				delimiter: '',
+				keysInInput: false
 			}, argOpts),
 			ns = options.namespace, // Event/CSS namespace
 			container = options.container, // Element to render results into
 			lastValue,
+			lastSelectedValue,
 			earlyReturn, // Indicates user pressed [Return] before results came back.
 			tSug,	// Timer for rendering suggestions
 			tHide,	// Timer for hiding suggestions
@@ -53,7 +56,8 @@
 		////////////////////////////////////////////////////////////////
 		// PRIVATE METHODS /////////////////////////////////////////////
 		var	init, buildHTML, update, showSuggestions, suggest, bindEvents,
-			normalizeSuggestions, updatePosition, onInput, onCommand;
+			normalizeSuggestions, updatePosition, onInput, onCommand,
+			getSelectedVal, setSelectedVal, getSelectedValPositions;
 
 		/**
 		 * Initializes an autosuggest instance.
@@ -186,11 +190,11 @@
 				latest,
 				src = options.source,
 				pool = [],
-				val = input.val(),
+				val = getSelectedVal(input.val(), input[0].selectionStart),
 				norm_callback = function (list) {
 					if (latest < suggest.latest || tSug) { return; } // Exit if other suggestions are coming.
 					else if (earlyReturn && (list||[]).length) { self.set(0,0,list[0]); update(); }
-					else { showSuggestions(normalizeSuggestions(list), val); }
+					else { showSuggestions(normalizeSuggestions(list), getSelectedVal(input.val(), input[0].selectionStart)); }
 				},
 				regex = new RegExp((options.leadingWildcard ? '': '^') + val, 'i');
 			tSug = 0;
@@ -214,6 +218,37 @@
 		};
 		suggest.latest = 0;
 
+		getSelectedValPositions = function(full_value, selection_start) {
+			var start = selection_start;
+			var end = selection_start;
+			while (start > 0 && full_value[start - 1] !== options.delimiter) {
+				start--;
+			}
+			while (end < full_value.length && full_value[end] !== options.delimiter) {
+				end++;
+			}
+			return [start, end];
+		};
+
+		getSelectedVal = function(full_value, selection_start) {
+			if (!options.delimiter) {
+				return full_value;
+			}
+			var positions = getSelectedValPositions(full_value, selection_start);
+			return full_value.substr(positions[0], positions[1] - positions[0]);
+		};
+
+		setSelectedVal = function(val) {
+			if (!options.delimiter) {
+				input.val(val);
+				return;
+			}
+			var full_value = input.val();
+			var positions = getSelectedValPositions(full_value, input[0].selectionStart);
+			full_value = full_value.substr(0, positions[0]) + val + full_value.substr(positions[1]);
+			input.val(full_value);
+		};
+
 		/**
 		 * Bind all events used by the plugin.
 		 */
@@ -232,6 +267,7 @@
 			})
 			.on('keydown.'+ns, onCommand)
 			.on('keyup.'+ns, onInput)
+			.on('click.'+ns, onInput) // in case a new delimited value is clicked on, requiring new suggestions
 			.on('blur.'+ns, function () {
 				if (!options.noHide) {
 					tHide = setTimeout(showSuggestions, 300);
@@ -265,15 +301,16 @@
 				listeners.keyup[i].call(input, e);
 			}
 
-			var sel, hadValue,
+			var sel,
 			wasTyping = tSug,
-			value = input.val();
+			value = input.val(),
+			selected_value = getSelectedVal(value, input[0].selectionStart);
 			earlyReturn = 0;
 
-			if (value === lastValue && e.which !== 13) { return; }
-			hadValue = !!self.get();
+			if (value === lastValue && selected_value === lastSelectedValue && e.which !== 13) { return; }
 			self.set();
 			lastValue = value;
+			lastSelectedValue = selected_value;
 			if (!value && options.minChars) {
 				showSuggestions();
 				return;
@@ -362,7 +399,8 @@
 			var i,
 				src = options.source;
 			if (obj.value && obj.key) {	// The nice case
-				input.val(obj.value).data(ns+'-data', obj);
+				input.data(ns+'-data', obj);
+				setSelectedVal(options.keysInInput ? obj.key : obj.value);
 				(cb||$.noop)();
 			} else if (obj.key) {	// Only key given
 				obj.value = obj.key;

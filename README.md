@@ -2,7 +2,7 @@
 
 Autocomplete plugin for jQuery that takes an input and adds functionality for local or AJAX autocomplete.
 
-Updated: January 2015
+Updated: January 2016
 
 ***
 
@@ -110,15 +110,22 @@ match any part of an option for that suggestion to be shown. For example, if the
 * `boldMatches: false` Add a bold styling to the substrings within each autosuggest result
 that match the user's query string. This style can be customized with the .asg-matched class.
 
+* `keysInInput: false` Let ASG know to put keys in the text input instead of values. This
+can be useful if you want your input to contain IDs, but you want to be able to search
+them by their text value representation.
+
+* `delimiter: ''` If set, this will treat the input as a delimiter-separated list, and
+autocomplete will be executed on each item in this list individually.
+
 ## Contributers and Open-Source License
 
-*Authors: Don McCurdy, David Schnurr*
+*Authors: Don McCurdy, David Schnurr, Dylan Wenzlau*
 
 ****
 
 The MIT License (MIT)
 
-Copyright (c) 2014 FindTheBest.com, Inc.
+Copyright (c) 2016 Graphiq, Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
