@@ -115,7 +115,8 @@ can be useful if you want your input to contain IDs, but you want to be able to 
 them by their text value representation.
 
 * `delimiter: ''` If set, this will treat the input as a delimiter-separated list, and
-autocomplete will be executed on each item in this list individually.
+autocomplete will be executed on each item in this list individually. Must be a single
+character.
 
 ## Contributers and Open-Source License
 
