@@ -1,7 +1,7 @@
 {
   "name": "asg.js",
   "main": "dist/asg.min.js",
-  "version": "0.5.8",
+  "version": "0.7.0",
   "homepage": "https://github.com/graphiq/asg.js",
   "authors": [
     "Graphiq Inc."
