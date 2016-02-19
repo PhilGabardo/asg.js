@@ -57,7 +57,7 @@
 		// PRIVATE METHODS /////////////////////////////////////////////
 		var	init, buildHTML, update, showSuggestions, suggest, bindEvents,
 			normalizeSuggestions, updatePosition, onInput, onCommand,
-			getSelectedVal, setSelectedVal, getSelectedValPositions;
+			getSelectedVal, setSelectedVal, getSelectedValPositions, escapeHtml;
 
 		/**
 		 * Initializes an autosuggest instance.
@@ -146,6 +146,22 @@
 		};
 
 		/**
+		 * To prevent XSS attacks, escape all html. Similar to PHP's htmlspecialchars()
+		 * @param  string raw_html
+		 */
+		escapeHtml = function (raw_html) {
+			if (typeof raw_html === 'string') {
+				return raw_html
+					.replace(/&/g, '&amp;')
+					.replace(/</g, '&lt;')
+					.replace(/>/g, '&gt;')
+					.replace(/"/g, '&quot;')
+					.replace(/'/g, '&#039;');
+			}
+			return raw_html;
+		};
+
+		/**
 		 * Shows a list of suggestions.
 		 * @param  array pool_of_suggestions
 		 */
@@ -159,7 +175,7 @@
 					valRegex = new RegExp('(' + val + ')', 'i');
 				for (i = 0; i < pool.length && i < limit; i++) {
 					p = pool[i];
-					displayValue = p.verbatim ? ('&#8220;'+p.value+'&#8221;') : p.value;
+					displayValue = p.verbatim ? ('&#8220;'+escapeHtml(p.value)+'&#8221;') : escapeHtml(p.value);
 					if (options.boldMatches) {
 						displayValue = displayValue.replace(valRegex, '<span class="'+ns+'-matched">$1</span>');
 					}
